@@ -7,6 +7,12 @@ namespace System.Reactive.Linq
     /// </summary>
     public static partial class Observable
     {
-        private static IQueryLanguage s_impl = QueryServices.GetQueryImpl<IQueryLanguage>(new QueryLanguage());
-    }
+#if NO_GVM
+		// This avoid Observable extension methods to call QueryLanguage through a Generic Virtual Method call, which 
+		// is a extremely time consuming operation on .NET Native and Mono's AOT. (about 80 times slower)
+		private static QueryLanguage s_impl = new QueryLanguage();
+#else
+		private static IQueryLanguage s_impl = QueryServices.GetQueryImpl<IQueryLanguage>(new QueryLanguage());
+#endif
+	}
 }

@@ -45,44 +45,7 @@
     <Flavor Include="Rx.sln">
       <Configuration>ReleasePLLITE</Configuration>
     </Flavor>	
-    <Flavor Include="Rx.sln">
-      <Configuration>DebugWP7</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>ReleaseWP7</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>DebugSL5</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>ReleaseSL5</Configuration>
-    </Flavor>
   </ItemGroup>
-
-
-  <!-- Legacy platforms -->
-
-  <ItemGroup>
-    <Flavor Include="Rx.sln">
-      <Configuration>DebugSL4</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>ReleaseSL4</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>Debug35</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>Release35</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>DebugXNA4</Configuration>
-    </Flavor>
-    <Flavor Include="Rx.sln">
-      <Configuration>ReleaseXNA4</Configuration>
-    </Flavor>
-  </ItemGroup>
-
 
   <!-- Future platforms -->
 

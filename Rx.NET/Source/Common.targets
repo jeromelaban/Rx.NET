@@ -153,7 +153,7 @@
   
   
   <PropertyGroup Condition=" '$(BuildTarget)' == 'PLLITE' ">
-    <DefineConstants>$(DefineConstants);NO_RXINTERFACES;NO_SERIALIZABLE;NO_REMOTING;NO_SEMAPHORE;NO_STOPWATCH;NO_CDS;PLIB;PLIB_LITE;NO_THREAD;USE_TASKEX;CRIPPLED_REFLECTION</DefineConstants>    
+    <DefineConstants>$(DefineConstants);NO_RXINTERFACES;NO_SERIALIZABLE;NO_REMOTING;NO_SEMAPHORE;NO_STOPWATCH;NO_CDS;PLIB;PLIB_LITE;NO_THREAD;USE_TASKEX;CRIPPLED_REFLECTION;NO_GVM</DefineConstants>    
     <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
       <!-- 

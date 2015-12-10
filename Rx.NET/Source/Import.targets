@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <!-- Non-Portable Library build -->
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v11.0\Microsoft.Windows.UI.Xaml.CSharp.targets" Condition=" '$(TargetFrameworkIdentifier)' == '.NETCore' " />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v14.0\Microsoft.Windows.UI.Xaml.CSharp.targets" Condition=" '$(TargetFrameworkIdentifier)' == '.NETCore' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(TargetFrameworkIdentifier)' != '.NETPortable' And ('$(BuildPlatform)' == 'DESKTOPCLR' Or '$(BuildPlatform)' == 'XNA') " />
   
   <!-- Silverlight ONLY (i.e., not phone) -->

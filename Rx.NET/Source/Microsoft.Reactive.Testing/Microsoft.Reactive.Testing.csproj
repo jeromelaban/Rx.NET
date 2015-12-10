@@ -24,18 +24,29 @@
   <PropertyGroup>
     <DocumentationFile>$(OutputPath)\$(AssemblyName).XML</DocumentationFile>
   </PropertyGroup>
+	<Choose>
+		<When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+			<ItemGroup>
+				<Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+			</ItemGroup>
+		</When>
+		<Otherwise>
+			<ItemGroup>
+				<Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
   <ItemGroup>
     <Reference Include="mscorlib" Condition=" '$(BuildPlatform)' == 'SILVERLIGHT' " />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTesting.Silverlight" Condition=" '$(BuildPlatform)' == 'SILVERLIGHT' " />
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" Condition=" '$(BuildPlatform)' == 'DESKTOPCLR' Or '$(BuildPlatform)' == 'WINDOWS_PHONE' " />
-    <Reference Include="System" />
+		<Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Observable" Condition=" '$(BuildFlavor)' == 'SILVERLIGHTM7' " />
   </ItemGroup>
-  <ItemGroup Condition=" '$(BuildFlavor)' == 'WINDOWS8' ">
-    <SDKReference Include="MSTestFramework, Version=11.0" />
-    <SDKReference Include="TestPlatform, Version=11.0" />
-  </ItemGroup>
+  <ItemGroup Condition=" '$(BuildFlavor)' == 'WINDOWS8' or '$(BuildFlavor)' == 'WINDOWS81' ">
+		<SDKReference Include="MSTestFramework" />
+		<SDKReference Include="TestPlatform" />
+	</ItemGroup>
   <ItemGroup>
     <Compile Include="ColdObservable.cs" />
     <Compile Include="GlobalSuppressions.cs" />
