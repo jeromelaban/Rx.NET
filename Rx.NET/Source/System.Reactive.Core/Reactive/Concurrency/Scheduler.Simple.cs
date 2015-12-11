@@ -5,82 +5,115 @@ using System.Reactive.Disposables;
 
 namespace System.Reactive.Concurrency
 {
-    public static partial class Scheduler
-    {
-        /// <summary>
-        /// Schedules an action to be executed.
-        /// </summary>
-        /// <param name="scheduler">Scheduler to execute the action on.</param>
-        /// <param name="action">Action to execute.</param>
-        /// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
-        public static IDisposable Schedule(this IScheduler scheduler, Action action)
-        {
-            if (scheduler == null)
-                throw new ArgumentNullException("scheduler");
-            if (action == null)
-                throw new ArgumentNullException("action");
+	public static partial class Scheduler
+	{
+		/// <summary>
+		/// Schedules an action to be executed.
+		/// </summary>
+		/// <param name="scheduler">Scheduler to execute the action on.</param>
+		/// <param name="action">Action to execute.</param>
+		/// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
+		public static IDisposable Schedule(this IScheduler scheduler, Action action)
+		{
+			if (scheduler == null)
+				throw new ArgumentNullException("scheduler");
+			if (action == null)
+				throw new ArgumentNullException("action");
 
-            return scheduler.Schedule(action, Invoke);
-        }
+			var scheduler2 = scheduler as IScheduler2;
 
-        /// <summary>
-        /// Schedules an action to be executed after the specified relative due time.
-        /// </summary>
-        /// <param name="scheduler">Scheduler to execute the action on.</param>
-        /// <param name="action">Action to execute.</param>
-        /// <param name="dueTime">Relative time after which to execute the action.</param>
-        /// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
-        public static IDisposable Schedule(this IScheduler scheduler, TimeSpan dueTime, Action action)
-        {
-            if (scheduler == null)
-                throw new ArgumentNullException("scheduler");
-            if (action == null)
-                throw new ArgumentNullException("action");
+			if (scheduler2 != null)
+			{
+				return scheduler2.Schedule(_ => Invoke2(action));
+			}
+			else
+			{
+				return scheduler.Schedule(action, Invoke);
+			}
+		}
 
-            return scheduler.Schedule(action, dueTime, Invoke);
-        }
+		/// <summary>
+		/// Schedules an action to be executed after the specified relative due time.
+		/// </summary>
+		/// <param name="scheduler">Scheduler to execute the action on.</param>
+		/// <param name="action">Action to execute.</param>
+		/// <param name="dueTime">Relative time after which to execute the action.</param>
+		/// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
+		public static IDisposable Schedule(this IScheduler scheduler, TimeSpan dueTime, Action action)
+		{
+			if (scheduler == null)
+				throw new ArgumentNullException("scheduler");
+			if (action == null)
+				throw new ArgumentNullException("action");
 
-        /// <summary>
-        /// Schedules an action to be executed at the specified absolute due time.
-        /// </summary>
-        /// <param name="scheduler">Scheduler to execute the action on.</param>
-        /// <param name="action">Action to execute.</param>
-        /// <param name="dueTime">Absolute time at which to execute the action.</param>
-        /// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
-        public static IDisposable Schedule(this IScheduler scheduler, DateTimeOffset dueTime, Action action)
-        {
-            if (scheduler == null)
-                throw new ArgumentNullException("scheduler");
-            if (action == null)
-                throw new ArgumentNullException("action");
+			var scheduler2 = scheduler as IScheduler2;
 
-            return scheduler.Schedule(action, dueTime, Invoke);
-        }
+			if (scheduler2 != null)
+			{
+				return scheduler2.Schedule(dueTime, _ => Invoke2(action));
+			}
+			else
+			{
+				return scheduler.Schedule(action, dueTime, Invoke);
+			}
+		}
 
-        /// <summary>
-        /// Schedules an action to be executed.
-        /// </summary>
-        /// <param name="scheduler">Scheduler to execute the action on.</param>
-        /// <param name="action">Action to execute.</param>
-        /// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
-        /// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
-        public static IDisposable ScheduleLongRunning(this ISchedulerLongRunning scheduler, Action<ICancelable> action)
-        {
-            if (scheduler == null)
-                throw new ArgumentNullException("scheduler");
-            if (action == null)
-                throw new ArgumentNullException("action");
+		/// <summary>
+		/// Schedules an action to be executed at the specified absolute due time.
+		/// </summary>
+		/// <param name="scheduler">Scheduler to execute the action on.</param>
+		/// <param name="action">Action to execute.</param>
+		/// <param name="dueTime">Absolute time at which to execute the action.</param>
+		/// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
+		public static IDisposable Schedule(this IScheduler scheduler, DateTimeOffset dueTime, Action action)
+		{
+			if (scheduler == null)
+				throw new ArgumentNullException("scheduler");
+			if (action == null)
+				throw new ArgumentNullException("action");
 
-            return scheduler.ScheduleLongRunning(action, (a, c) => a(c));
-        }
+			var scheduler2 = scheduler as IScheduler2;
 
-        static IDisposable Invoke(IScheduler scheduler, Action action)
-        {
-            action();
-            return Disposable.Empty;
-        }
-    }
+			if (scheduler2 != null)
+			{
+				return scheduler2.Schedule(dueTime, _ => Invoke2(action));
+			}
+			else
+			{
+				return scheduler.Schedule(action, dueTime, Invoke);
+			}
+		}
+
+		/// <summary>
+		/// Schedules an action to be executed.
+		/// </summary>
+		/// <param name="scheduler">Scheduler to execute the action on.</param>
+		/// <param name="action">Action to execute.</param>
+		/// <returns>The disposable object used to cancel the scheduled action (best effort).</returns>
+		/// <exception cref="ArgumentNullException"><paramref name="scheduler"/> or <paramref name="action"/> is null.</exception>
+		public static IDisposable ScheduleLongRunning(this ISchedulerLongRunning scheduler, Action<ICancelable> action)
+		{
+			if (scheduler == null)
+				throw new ArgumentNullException("scheduler");
+			if (action == null)
+				throw new ArgumentNullException("action");
+
+			return scheduler.ScheduleLongRunning(action, (a, c) => a(c));
+		}
+
+		static IDisposable Invoke(IScheduler scheduler, Action action)
+		{
+			action();
+			return Disposable.Empty;
+		}
+
+		static IDisposable Invoke2(Action action)
+		{
+			action();
+			return Disposable.Empty;
+		}
+	}
 }

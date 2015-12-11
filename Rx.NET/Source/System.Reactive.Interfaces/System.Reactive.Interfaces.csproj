@@ -38,6 +38,7 @@
     <Compile Include="IObserver.cs" />
     <Compile Include="NamespaceDocs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reactive\Concurrency\IScheduler2.cs" />
     <Compile Include="Reactive\Concurrency\ISchedulerPeriodic.cs" />
     <Compile Include="Reactive\Concurrency\IStopwatchProvider.cs" />
     <Compile Include="Reactive\Concurrency\IScheduledItem.cs" />
